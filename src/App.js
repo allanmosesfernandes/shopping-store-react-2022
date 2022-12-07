@@ -4,19 +4,14 @@ import React from 'react'
 import Home from './routes/homepage';
 import Navigation from './routes/navigation';
 import {Routes, Route} from 'react-router-dom';
-
-const Shop = () => {
-  return (
-    <div>Shop</div>
-  )
-}
+import SignIn from './routes/signin';
 
 const App = () => {
   
   return (
   <Routes>
     <Route path='/' element={<Navigation/>}>
-      <Route index path='shop' element={<Shop />} />
+      <Route index path='sign-in' element={<SignIn />} />
     </Route>
   </Routes>
   
