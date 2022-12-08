@@ -1,23 +1,30 @@
 import React from 'react'
 import { useState } from 'react'
-import { createAuthUserFromEmailPasswor, createAuthUserFromEmailPassword } from '../../utils/utils'
+import { createUserDocFromAuth, createAuthUserFromEmailPassword } from '../../utils/utils'
+import FormInput from '../formInput/formInput'
 const defaultFormfields = {
   displayName: '',
   email: '',
   password: '',
   confirmPassword: ''
 }
-
 const SignUpForm = () => {
 
   const [formfields, setFormFileds] = useState(defaultFormfields);
   const {displayName, email, password, confirmPassword} = formfields;
   
-
+//==Handle Form Input, so everytime form input changes add it to state
   const handleFormInput = (event) => {
     const {name, value} = event.target;
     setFormFileds({...formfields, [name]:value})
   }
+
+//==Rest Form Field 
+  const resetFormFields = () => {
+    setFormFileds(defaultFormfields)
+  }
+
+//==Handle Submit tied to firebase authentication
   const handleSubmit = async (event) => {
     event.preventDefault();
     if(password !== confirmPassword) {
@@ -26,31 +33,54 @@ const SignUpForm = () => {
     }
 
     try {
-      const createResponse = await createAuthUserFromEmailPassword(email,password);
-      console.log(createResponse)
+      const {user} = await createAuthUserFromEmailPassword(email,password);
+      await createUserDocFromAuth(user, {displayName});
+      resetFormFields();
     } catch (error) {
       console.log('error authenticating user', error.message)
     }
-    /*     if (password === confirmPassword){
-      const createResponse = await createAuthUserFromEmailPassword(email,password);
-      console.log(createResponse)
-    }return; */
+    
   }
   return (
     <div>
       <h1>Sign up if you're a new user</h1>
       <form onSubmit={handleSubmit}>
-        <label>First Name</label>
-        <input type="text" required name='displayName' onChange={handleFormInput} value={displayName} /> 
+        <FormInput 
+          name="displayName"
+          label="Display Name" 
+          type="text" 
+          required 
+          onChange={handleFormInput} 
+          value={displayName}
+          />
 
-        <label>Email</label>
-        <input type="email" required name='email' onChange={handleFormInput} value={email} /> 
+        <FormInput
+          name="email"
+          label="Email"
+          type="email"
+          required
+          onChange={handleFormInput} 
+          value={email}
+        />
 
-        <label>Password</label>
-        <input type="password" required name='password' onChange={handleFormInput} value={password} /> 
+        <FormInput
+          name="password"
+          label="Password"
+          required
+          type="password"
+          name="password"
+          onChange={handleFormInput} 
+          value={password}
+        />
 
-        <label>Confirm Password</label>
-        <input type="password" required name='confirmPassword' onChange={handleFormInput} value={confirmPassword} /> 
+        <FormInput
+          label="Confirm Password"
+          required
+          type="password"
+          name="confirmPassword"
+          onChange={handleFormInput} 
+          value={confirmPassword}
+        />
 
         <button type='submit'>Sign Up</button>
       </form>
@@ -59,3 +89,6 @@ const SignUpForm = () => {
 }
 
 export default SignUpForm
+
+            // onChange={handleFormInput} 
+            // value={displayName} 
