@@ -1,6 +1,7 @@
 import React from 'react'
 import { signInWithGooglePop, createUserDocFromAuth } from '../utils/utils';
 import SignUpForm from '../components/sign-up-form/SignUpForm';
+import SignInEmailPassword from "../components/sign-up-email-pass/SignInEmailPassword"
 
 const logGoogleUser = async () => {
   const { user } = await signInWithGooglePop();
@@ -11,8 +12,8 @@ const logGoogleUser = async () => {
 const SignIn = () => {
   return (
     <>
-        <button className="dkfdf" onClick={logGoogleUser}>Click to sign up</button>
       <SignUpForm />
+      <SignInEmailPassword />
     </>
 
   )
