@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { createUserDocFromAuth, createAuthUserFromEmailPassword } from '../../utils/utils'
+import { createUserDocFromAuth, createAuthUserFromEmailPassword, signInWithGooglePop } from '../../utils/utils'
 import FormInput from '../formInput/formInput'
 import Button from '../button/button'
 const defaultFormfields = {
@@ -19,6 +19,11 @@ const SignUpForm = () => {
     const {name, value} = event.target;
     setFormFileds({...formfields, [name]:value})
   }
+const googlePopup = async () => {
+  const { user } = await signInWithGooglePop();
+  console.log(user)
+  createUserDocFromAuth(user);
+}
 
 //==Rest Form Field 
   const resetFormFields = () => {
@@ -42,6 +47,8 @@ const SignUpForm = () => {
     }
     
   }
+  
+
   return (
     <div className='sign-up-container'>
       <h2>Don't have an account? </h2>

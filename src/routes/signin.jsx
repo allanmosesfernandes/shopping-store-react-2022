@@ -3,19 +3,19 @@ import { signInWithGooglePop, createUserDocFromAuth } from '../utils/utils';
 import SignUpForm from '../components/sign-up-form/SignUpForm';
 import SignInEmailPassword from "../components/sign-up-email-pass/SignInEmailPassword"
 
-const logGoogleUser = async () => {
+
+const SignIn = () => {
+  const goo = async () => {
   const { user } = await signInWithGooglePop();
   console.log(user)
   createUserDocFromAuth(user);
 }
-
-const SignIn = () => {
   return (
-    <>
+    <div className="authentication-container">
       <SignUpForm />
-      <SignInEmailPassword />
-    </>
-
+      <button onClick={goo}>Sign up using Google</button>
+      <SignInEmailPassword/> 
+    </div>
   )
 }
 

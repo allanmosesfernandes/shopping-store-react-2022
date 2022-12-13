@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { 
   createUserDocFromAuth, 
   createAuthUserFromEmailPassword,
-  signInWithFirebaseEmailPassword
+  signInWithFirebaseEmailPassword,
+  signInWithGooglePop
 } from '../../utils/utils'
 import FormInput from '../formInput/formInput'
 import Button from '../button/button'
