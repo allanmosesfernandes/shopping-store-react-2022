@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { createUserDocFromAuth, createAuthUserFromEmailPassword } from '../../utils/utils'
 import FormInput from '../formInput/formInput'
+import Button from '../button/button'
 const defaultFormfields = {
   displayName: '',
   email: '',
@@ -42,8 +43,9 @@ const SignUpForm = () => {
     
   }
   return (
-    <div>
-      <h1>Sign up if you're a new user</h1>
+    <div className='sign-up-container'>
+      <h2>Don't have an account? </h2>
+      <span>Sign up if you're a new user</span>
       <form onSubmit={handleSubmit}>
         <FormInput 
           name="displayName"
@@ -81,14 +83,11 @@ const SignUpForm = () => {
           onChange={handleFormInput} 
           value={confirmPassword}
         />
-
-        <button type='submit'>Sign Up</button>
+        <Button type="submit" text="Sign up" buttonType="google"/>
+        {/* <button type='submit'>Sign Up</button> */}
       </form>
     </div>
   )
 }
 
 export default SignUpForm
-
-            // onChange={handleFormInput} 
-            // value={displayName} 
