@@ -1,8 +1,9 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { createUserDocFromAuth, createAuthUserFromEmailPassword, signInWithGooglePop } from '../../utils/utils'
 import FormInput from '../formInput/formInput'
 import Button from '../button/button'
+import { UserContext } from '../../context/userContext'
 const defaultFormfields = {
   displayName: '',
   email: '',
@@ -13,7 +14,7 @@ const SignUpForm = () => {
 
   const [formfields, setFormFileds] = useState(defaultFormfields);
   const {displayName, email, password, confirmPassword} = formfields;
-  
+  const { setCurrentUser } = useContext(UserContext);
 //==Handle Form Input, so everytime form input changes add it to state
   const handleFormInput = (event) => {
     const {name, value} = event.target;
@@ -41,6 +42,7 @@ const googlePopup = async () => {
     try {
       const {user} = await createAuthUserFromEmailPassword(email,password);
       await createUserDocFromAuth(user, {displayName});
+      setCurrentUser(user);
       resetFormFields();
     } catch (error) {
       console.log('error authenticating user', error.message)
